@@ -21,6 +21,7 @@ class Chatbot():
         self.agenda = ['atendimento','agendamento','marca atendiemtno'   ]
 
         self.diaSemana = 'segunda','terça', 'quarta', 'quinta','sexta'
+        self.diaFDS = 'sabado', 'domingo'
 
         self.horarioDisponiveis = '08h:00', '09h:00'
 
@@ -40,6 +41,8 @@ class Chatbot():
             return 'Temos dias diposniveis, qual dia?'
         if frase in self.diaSemana:
             return 'Qual Horario'
+        if frase in self.diaFDS:
+            return 'infelismente não trabalhamos nesse dia,\napenas dias uteis e horarios comecias '
         if frase == self.horarioDisponiveis:
             return self.frases[frase]
         if frase == 'sim':
@@ -55,6 +58,7 @@ class Chatbot():
         if ultimaFrase == 'Olá, qual o seu nome?':
             nome = self.pegaNome(frase)
             frase = self.respondeNome(nome)
+
             return frase
 
         if ultimaFrase ==  'Qual Horario':
