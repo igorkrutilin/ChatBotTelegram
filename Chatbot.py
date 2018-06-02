@@ -10,7 +10,7 @@ class Chatbot():
             memoria = open(nome + '.json', 'r')
         except FileNotFoundError:
             memoria = open(nome + '.json', 'w')
-            memoria.write('[["Will","Alfredo"],{"oi": "Olá, qual o seu nome?","tchau":"tchau"}]')
+            memoria.write('[["Will","Alfredo"],{"oi": "Olá, qual o seu nome?","tchau":"tchau, até mais..."}]')
             memoria.close()
             memoria = open(nome + '.json', 'r')
         self.nome = nome
@@ -18,15 +18,11 @@ class Chatbot():
         memoria.close()
         self.historico = [None,]
 
-        self.agenda = {
-            'atendimento': 'Certo. Que dia gostaria de realizar a consulta?',
-                       'ok': 'agendado...'
-        }
+        self.agenda = ['atendimento','agendamento','marca atendiemtno'   ]
 
-        self.diaSemana = {
-            #'segunda': 'pode ser as 8h?', 'sim': 'ok, agendado'
-            'segunda' or 'terça' or 'quarta' or 'quinta' or 'sexta'
-        }
+        self.diaSemana = 'segunda','terça', 'quarta', 'quinta','sexta'
+
+        self.horarioDisponiveis = '08h:00', '09h:00'
 
 
     def escuta(self, frase=None):
@@ -40,8 +36,17 @@ class Chatbot():
     def pensa(self,frase):
         if frase in self.frases:
             return self.frases[frase]
+        if frase in self.agenda:
+            return 'Temos dias diposniveis, qual dia?'
         if frase in self.diaSemana:
-            return 'Temos horarios disponiveis nesse dia '
+            return 'Qual Horario'
+        if frase == self.horarioDisponiveis:
+            return self.frases[frase]
+        if frase == 'sim':
+            return 'em que posso te ajudar'
+        if frase == 'nao obrigado':
+            return 'Tenha um otimo dia, tchau'
+
         if frase == 'aprende':
             return 'Digite a frase: '
 
@@ -51,6 +56,11 @@ class Chatbot():
             nome = self.pegaNome(frase)
             frase = self.respondeNome(nome)
             return frase
+
+        if ultimaFrase ==  'Qual Horario':
+            self.chave = frase
+            return 'Ok ' + frase +' agendando, Mais alguma coisa que posso ajudar?'
+
         if ultimaFrase == 'Digite a frase: ':
             self.chave = frase
             return 'Digite a resposta: '
