@@ -10,23 +10,22 @@ class Chatbot():
             memoria = open(nome + '.json', 'r')
         except FileNotFoundError:
             memoria = open(nome + '.json', 'w')
-            memoria.write('["Gabriel","Alfredo"]')
+            memoria.write('[["Will","Alfredo"],{"oi": "Olá, qual o seu nome?","tchau":"tchau"}]')
             memoria.close()
             memoria = open(nome + '.json', 'r')
         self.nome = nome
-        self.conhecidos = json.load(memoria)
+        self.conhecidos, self.frases = json.load(memoria)
         memoria.close()
-        self.historico = []
-        self.frases = {
-            'oi': 'Olá, qual o seu nome?', 'tchau': 'tchau, até mais '
-        }
+        self.historico = [None,]
+
         self.agenda = {
             'atendimento': 'Certo. Que dia gostaria de realizar a consulta?',
                        'ok': 'agendado...'
         }
 
         self.diaSemana = {
-            'segunda': 'pode ser as 8h?', 'sim': 'ok, agendado'
+            #'segunda': 'pode ser as 8h?', 'sim': 'ok, agendado'
+            'segunda' or 'terça' or 'quarta' or 'quinta' or 'sexta'
         }
 
 
@@ -38,26 +37,33 @@ class Chatbot():
         frase = frase.replace('é', 'eh')    # subistituir é por eh
         return frase
 
-    def pensa(self, frase):
+    def pensa(self,frase):
         if frase in self.frases:
             return self.frases[frase]
-        if frase in self.agenda:
-            return self.agenda[frase]
         if frase in self.diaSemana:
-            return self.diaSemana[frase]
-
+            return 'Temos horarios disponiveis nesse dia '
         if frase == 'aprende':
-            chave = input('Digite a frase: ')
-            resp = input('Digite a resposta: ')
-            self.frases[chave] = resp
+            return 'Digite a frase: '
+
+        # Responde frases que dependem do historico
+        ultimaFrase = self.historico[-1]
+        if ultimaFrase == 'Olá, qual o seu nome?':
+            nome = self.pegaNome(frase)
+            frase = self.respondeNome(nome)
+            return frase
+        if ultimaFrase == 'Digite a frase: ':
+            self.chave = frase
+            return 'Digite a resposta: '
+        if ultimaFrase == 'Digite a resposta: ':
+            resp = frase
+            self.frases[self.chave] = resp
             self.gravaMemoria()
             return 'Aprendido'
-        if self.historico:
-            if self.historico[-1] == 'Olá, qual o seu nome?':
-                nome = self.pegaNome(frase)
-                frase = self.respondeNome(nome)
-                return frase
-
+        if ultimaFrase == 'Temos horarios disponiveis nesse dia ':
+            resp = frase
+            self.frases[self.chave] = resp
+            self.gravaMemoria()
+            return 'agendado'
         try:
             resp = str(eval(frase))
             return resp
