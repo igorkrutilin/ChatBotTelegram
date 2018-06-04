@@ -104,6 +104,7 @@ class Chatbot():
             frase2 = ' em que posso te ajudar? '
             self.conhecidos.append(nome)
             self.gravaMemoria()
+        #self.enterDataCliente(0, nome)
         return frase + nome + frase2
 
 
@@ -134,6 +135,11 @@ class Chatbot():
 
     def enterData(self, dia, horario, nomePessoa):
         self.c.execute("INSERT INTO AGENDA_DB(dia, horario, nomePessoa) VALUES(?, ?, ?)", (dia, horario, nomePessoa))
+        self.conn.commit()
+
+    def enterDataCliente(self, id, nomePessoa):
+        self.c.execute("INSERT INTO CLIENTE(id, nome) VALUES(?, ?)", (id, nomePessoa))
+
         self.conn.commit()
 
     def searchSpecificData(self,horario):
