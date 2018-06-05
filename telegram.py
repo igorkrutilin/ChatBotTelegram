@@ -4,7 +4,9 @@ from Chatbot import Chatbot
 telegram = telepot.Bot("614899342:AAHQN07RNMDfaCpWN21NJT54DDKkF2mmDzs")
 
 bot = Chatbot("MariaBot")
-bot.conectBanco('AgendaMaria.db')
+#bot.conectBanco('AgendaMaria.db')
+
+#bot.enterDataCliente(1,'joao2')
 #bot.createTable()
 #bot.enterData('quinta-feira','08:00','joao')
 
