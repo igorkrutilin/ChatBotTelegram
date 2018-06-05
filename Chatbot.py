@@ -24,21 +24,27 @@ class Chatbot():
         self.diaEscolhido = ['','','','','']
         #self.conectBanco('AgendaMaria.db')
 
-        self.agenda = {'atendimento','agendamento','marca atendimento' }
+        self.lista_cumprimentar = {'oi', 'ola', 'olá', 'oie', 'bão', 'bao', 'eai', 'opa', 'joia', 'joinha',
+                                     'bom', 'dia', 'boa', 'tarde', 'noite'}
+
+        self.agenda = {'atendimento','agendamento','fazer agendamento','marcar atendimento',
+                       'marcar agendamento','marcar agendamento', 'consulta','consulta medica' }
+
+        self.horarioAtendimentos = {'horario de atendimentos', 'meus horarios', 'horarios agendado' }
+
+        self.desmarcarAgenda = {'desmarcar', 'desmarcar agendamento'}
 
         self.diaSemana = {
-            'segunda','terça', 'quarta', 'quinta','sexta',
-            'segunda-feira', 'terça-feria','quarta-feira','quinta-feira', 'sexta-feira'
-        }
+                             'segunda','terça', 'quarta', 'quinta','sexta',
+                             'segunda-feira', 'terça-feria','quarta-feira','quinta-feira', 'sexta-feira'
+                         }
         self.diaFDS = {'sabado', 'domingo'}
 
         self.horarioDisponiveis = {
                                     '08:00','09:00','10:00','11:00','13:00','14:00','15:00','16:00','17:00'
-                                     #'8','08','9','09','10','11','13','14','15','16','17','18'
+                                    '8','08','9','09','10','11','13','14','15','16','17','18'
                                  }
-        self.horarioIndis = {
-            '12:00', '12'
-        }
+        self.horarioIndis = { '12:00', '12' }
 
 
     def escuta(self, frase=None):
@@ -52,6 +58,8 @@ class Chatbot():
     def pensa(self,frase):
         if frase in self.frases:
             return self.frases[frase]
+        if frase in self.lista_cumprimentar:
+            return "Olá, qual o seu nome?"
         if frase in self.agenda:
             diasDaSemana = "Temos dias disponiveis\nSegunda-feira\nTerça-feria\nQuarta-feira\nQuinta-feira\nSexta-feira\nQue dia prefere?\n"
             return diasDaSemana
@@ -92,7 +100,6 @@ class Chatbot():
         ultimaFrase = self.historico[-3]
         if ultimaFrase == 'Temos dias diposniveis, qual dia?':
             self.chave = frase
-            print("teste2 v", self.historico)
             self.conectBanco('AgendaMaria.db')
             self.enterSemana(self.id, frase)
             self.disconectBanco()
@@ -136,7 +143,7 @@ class Chatbot():
     def respondeNome(self, nome):
         if nome in self.conhecidos:
             frase = 'Eaew '
-            frase2 =  ' em que posso te ajudar? '
+            frase2 =  ' em que posso te ajudar? \nAgendar consulta\nHorarios de atendimetno\nDesmarcar consulta '
         else:
             frase = 'Muito prazer '
             frase2 = ' em que posso te ajudar? '
