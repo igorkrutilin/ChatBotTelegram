@@ -19,7 +19,8 @@ class Chatbot():
         self.conhecidos, self.frases = json.load(memoria)
         memoria.close()
         self.historico = [None,]
-
+        self.resp=0
+        self.resp1=0
         self.id=0
         self.diaEscolhido = ['','','','','']
         #self.conectBanco('AgendaMaria.db')
@@ -28,14 +29,13 @@ class Chatbot():
                                      'bom', 'dia', 'boa', 'tarde', 'noite'}
 
         self.agenda = {'atendimento','agendamento','fazer agendamento','marcar atendimento',
-                       'marcar agendamento','marcar agendamento', 'consulta','consulta medica' }
+                       'marcar agendamento','marcar agendamento', 'consulta','consulta medica','agendar consulta','agendar atendimento' }
 
         self.horarioAtendimentos = {'horario de atendimentos', 'meus horarios', 'horarios agendado' }
 
-        self.desmarcarAgenda = {'desmarcar', 'desmarcar agendamento'}
+        self.desmarcarAgenda = {'desmarcar', 'desmarcar agendamento', 'desmarcar consulta'}
 
-        self.diaSemana = {
-                             'segunda','terça', 'quarta', 'quinta','sexta',
+        self.diaSemana = {   'segunda','terça', 'quarta', 'quinta','sexta',
                              'segunda-feira', 'terça-feria','quarta-feira','quinta-feira', 'sexta-feira'
                          }
         self.diaFDS = {'sabado', 'domingo'}
@@ -45,6 +45,8 @@ class Chatbot():
                                     '8','08','9','09','10','11','13','14','15','16','17','18'
                                  }
         self.horarioIndis = { '12:00', '12' }
+
+
 
 
     def escuta(self, frase=None):
@@ -61,7 +63,7 @@ class Chatbot():
         if frase in self.lista_cumprimentar:
             return "Olá, qual o seu nome?"
         if frase in self.agenda:
-            diasDaSemana = "Temos dias disponiveis\nSegunda-feira\nTerça-feria\nQuarta-feira\nQuinta-feira\nSexta-feira\nQue dia prefere?\n"
+            diasDaSemana = "Temos dias disponiveis\n\nSegunda-feira\nTerça-feria\nQuarta-feira\nQuinta-feira\nSexta-feira\nQue dia prefere?\n"
             return diasDaSemana
         if frase in self.diaSemana:
             self.diaEscolhido[3]=frase
@@ -69,15 +71,40 @@ class Chatbot():
             return horariosDia
         if frase in self.diaFDS:
             return 'Infelismente não trabalhamos nesse dia,\nApenas dias uteis e horarios comecias '
+
         if frase in self.horarioDisponiveis:
             self.diaEscolhido[4]=frase
             self.conectBanco('AgendaMaria.db')
             print("dia ",self.diaEscolhido[3])
             self.inserirAgendamento(self.id, self.diaEscolhido[3], self.diaEscolhido[4], self.diaEscolhido[1])
-
             self.disconectBanco()
             return 'Ok as '+frase+ ' agendado anote seu ID '+str(self.id)+ ' caso precise desmarcar\n mais alguma coisa que posso te ajudar?'
-            #return saida
+
+        if frase in self.desmarcarAgenda:
+            self.resp=1
+            return 'Digite seu ID: '
+
+        if 1 == self.resp:
+            self.diaEscolhido = int(frase)
+            self.conectBanco('AgendaMaria.db')
+            self.deleteAgendamento(int(self.diaEscolhido))
+            self.disconectBanco()
+            self.resp=0
+            return 'Ok Id numero ' + frase + ' foi desmarcado '
+
+        if frase in self.horarioAtendimentos:
+            self.resp1 = 2
+            return 'Digite seu ID: '
+
+        if 2 == self.resp1:
+            self.diaEscolhido = int(frase)
+            self.conectBanco('AgendaMaria.db')
+            tupla = self.searchSpecificData(int(self.diaEscolhido))
+            self.disconectBanco()
+            self.resp1 = 0
+            return 'Ok Id numero ' + frase + ' seu ´horario é... ' + str(tupla)
+
+
         if frase == 'sim':
             return 'Estou a disposição, o que seria?'
         if frase == 'nao obrigado':
@@ -105,10 +132,10 @@ class Chatbot():
             self.disconectBanco()
             return frase + ' ok'
 
-
         if ultimaFrase ==  'Qual Horario':
             self.chave = frase
             return 'Ok ' + frase +' agendando, Mais alguma coisa que posso ajudar?'
+
 
         if ultimaFrase == 'Digite a frase: ':
             self.chave = frase
@@ -143,13 +170,11 @@ class Chatbot():
     def respondeNome(self, nome):
         if nome in self.conhecidos:
             frase = 'Eaew '
-            frase2 =  ' em que posso te ajudar? \nAgendar consulta\nHorarios de atendimetno\nDesmarcar consulta '
         else:
             frase = 'Muito prazer '
-            frase2 = ' em que posso te ajudar? '
             self.conhecidos.append(nome)
             self.gravaMemoria()
-
+        frase2 = ' em que posso te ajudar? \n\nAgendar consulta\nHorarios de atendimentos\nDesmarcar consulta '
         self.contagemClientes('AgendaMaria.db')
         self.disconectBanco()
         self.conectBanco('AgendaMaria.db')
@@ -211,8 +236,20 @@ class Chatbot():
         self.c.execute("INSERT INTO AGENDA_DB(id, dia, horario, cliente) VALUES(?, ?, ?, ?)", (id, diaSemana, horarioDia, nomePessoa))
         self.conn.commit()
 
-    def searchSpecificData(self,horario):
-        self.c.execute("SELECT dia FROM AGENDA_DB WHERE horario=?", (horario))
+    def deleteAgendamento(self, id):
+       # self.c.execute("DELETE FROM AGENDA_DB WHERE AGENDA_DB.ID = ?", (id))
+        print(id)
+        self.c.execute("""DELETE FROM AGENDA_DB WHERE id = ?""", (id,))
+        #delete from AGENDA_DB where AGENDA_DB.id = 77
+        self.conn.commit()
+
+
+    def searchSpecificData(self,id):
+        # self.c.execute("SELECT* FROM AGENDA_DB WHERE id=?", (id,))
+        # self.c.fetchone()
+        return self.c.execute("SELECT * FROM AGENDA_DB WHERE id=?",(id,)):
+            print(row)
+        return 0
 
     def printSemana(self):
-        self.c.execute("SELECT dia FROM AGENDA_DB WHERE horario=?", (horario))
+        self.c.execute("SELECT dia FROM AGENDA_DB WHERE horario=?", (horario,))
