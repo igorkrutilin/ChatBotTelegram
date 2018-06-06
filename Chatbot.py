@@ -23,7 +23,6 @@ class Chatbot():
         self.resp1=0
         self.id=0
         self.diaEscolhido = ['','','','','']
-        #self.conectBanco('AgendaMaria.db')
 
         self.lista_cumprimentar = {'oi', 'ola', 'olá', 'oie', 'bão', 'bao', 'eai', 'opa', 'joia', 'joinha',
                                      'bom', 'dia', 'boa', 'tarde', 'noite'}
@@ -48,7 +47,6 @@ class Chatbot():
 
 
 
-
     def escuta(self, frase=None):
         if frase == None:
             frase = input('>: ')
@@ -56,6 +54,12 @@ class Chatbot():
         frase = frase.lower()   # tranforma frase em minuscula
         frase = frase.replace('é', 'eh')    # subistituir é por eh
         return frase
+
+    def fim(self,):
+        nome = self.nome
+        self.__init__("MariaBot")
+        self.nome=nome
+
 
     def pensa(self,frase):
         if frase in self.frases:
@@ -78,6 +82,7 @@ class Chatbot():
             print("dia ",self.diaEscolhido[3])
             self.inserirAgendamento(self.id, self.diaEscolhido[3], self.diaEscolhido[4], self.diaEscolhido[1])
             self.disconectBanco()
+            self.diaEscolhido =0
             return 'Ok as '+frase+ ' agendado anote seu ID '+str(self.id)+ ' caso precise desmarcar\n mais alguma coisa que posso te ajudar?'
 
         if frase in self.desmarcarAgenda:
@@ -90,6 +95,7 @@ class Chatbot():
             self.deleteAgendamento(int(self.diaEscolhido))
             self.disconectBanco()
             self.resp=0
+            self.diaEscolhido=0
             return 'Ok Id numero ' + frase + ' foi desmarcado '
 
         if frase in self.horarioAtendimentos:
@@ -98,8 +104,8 @@ class Chatbot():
 
         if 2 == self.resp1:
             self.diaEscolhido = int(frase)
-            self.conectBanco('AgendaMaria.db')
-            tupla = self.searchSpecificData(int(self.diaEscolhido))
+            #self.conectBanco('AgendaMaria.db')
+            tupla = self.searchSpecificData(int(self.diaEscolhido),'AgendaMaria.db')
             self.disconectBanco()
             self.resp1 = 0
             return 'Ok Id numero ' + frase + ' seu ´horario é... ' + str(tupla)
@@ -244,12 +250,12 @@ class Chatbot():
         self.conn.commit()
 
 
-    def searchSpecificData(self,id):
-        # self.c.execute("SELECT* FROM AGENDA_DB WHERE id=?", (id,))
-        # self.c.fetchone()
-        return self.c.execute("SELECT * FROM AGENDA_DB WHERE id=?",(id,)):
-            print(row)
-        return 0
+    def searchSpecificData(self,id,nomeBanco):
+        self.conn = sqlite3.connect(nomeBanco)
+        self.c = self.conn.cursor()
+        self.c.execute("SELECT * FROM AGENDA_DB WHERE id=?",(id,))
+        saida = self.c.fetchone()
+        tratado = '\n'+str(saida[3])+' esta marcado para '+str(saida[1])+' as '+str(saida[2])
+        return tratado
 
-    def printSemana(self):
-        self.c.execute("SELECT dia FROM AGENDA_DB WHERE horario=?", (horario,))
+
