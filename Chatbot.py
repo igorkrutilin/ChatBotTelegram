@@ -101,10 +101,9 @@ class Chatbot():
         if frase in self.horarioAtendimentos:
             self.resp1 = 2
             return 'Digite seu ID: '
-
+        '''mostra horarios'''
         if 2 == self.resp1:
             self.diaEscolhido = int(frase)
-            #self.conectBanco('AgendaMaria.db')
             tupla = self.searchSpecificData(int(self.diaEscolhido),'AgendaMaria.db')
             self.disconectBanco()
             self.resp1 = 0
@@ -180,7 +179,7 @@ class Chatbot():
             frase = 'Muito prazer '
             self.conhecidos.append(nome)
             self.gravaMemoria()
-        frase2 = ' em que posso te ajudar? \n\nAgendar consulta\nHorarios de atendimentos\nDesmarcar consulta '
+        frase2 = ' em que posso te ajudar? \n\nAgendar consulta\nMeus horários\nDesmarcar consulta '
         self.contagemClientes('AgendaMaria.db')
         self.disconectBanco()
         self.conectBanco('AgendaMaria.db')
