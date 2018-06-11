@@ -27,10 +27,10 @@ class Chatbot():
         self.lista_cumprimentar = {'oi', 'ola', 'olá', 'oie', 'bão', 'bao', 'eai', 'opa', 'joia', 'joinha',
                                      'bom', 'dia', 'boa', 'tarde', 'noite'}
 
-        self.agenda = {'atendimento','agendamento','fazer agendamento','marcar atendimento',
+        self.agenda = {'atendimento','agendar','agendamento','fazer agendamento','marcar atendimento',
                        'marcar agendamento','marcar agendamento', 'consulta','consulta medica','agendar consulta','agendar atendimento' }
 
-        self.horarioAtendimentos = {'horario de atendimentos', 'meus horarios', 'horarios agendado' }
+        self.horarioAtendimentos = {'horario de atendimentos', 'meus horarios', 'horarios agendado','Meus horários'}
 
         self.desmarcarAgenda = {'desmarcar', 'desmarcar agendamento', 'desmarcar consulta'}
 
@@ -40,7 +40,7 @@ class Chatbot():
         self.diaFDS = {'sabado', 'domingo'}
 
         self.horarioDisponiveis = {
-                                    '08:00','09:00','10:00','11:00','13:00','14:00','15:00','16:00','17:00'
+                                    '08:00','09:00','10:00','11:00','13:00','14:00','15:00','16:00','17:00',
                                     '8','08','9','09','10','11','13','14','15','16','17','18'
                                  }
         self.horarioIndis = { '12:00', '12' }
@@ -82,8 +82,8 @@ class Chatbot():
             print("dia ",self.diaEscolhido[3])
             self.inserirAgendamento(self.id, self.diaEscolhido[3], self.diaEscolhido[4], self.diaEscolhido[1])
             self.disconectBanco()
-            self.diaEscolhido =0
-            return 'Ok as '+frase+ ' agendado anote seu ID '+str(self.id)+ ' caso precise desmarcar\n mais alguma coisa que posso te ajudar?'
+            del self.diaEscolhido
+            return 'Ok as '+frase+ ' agendado, anote seu ID '+str(self.id)+ ' caso precise desmarcar!\n\nMais alguma coisa que posso te ajudar?\nSim\nNão'
 
         if frase in self.desmarcarAgenda:
             self.resp=1
@@ -107,11 +107,11 @@ class Chatbot():
             tupla = self.searchSpecificData(int(self.diaEscolhido),'AgendaMaria.db')
             self.disconectBanco()
             self.resp1 = 0
-            return 'Ok Id numero ' + frase + ' seu ´horario é... ' + str(tupla)
+            return 'Ok Id numero ' + frase + ' seu ´horario é... ' + str(tupla) + '\n\nMais alguma coisa que posso te ajudar?\nSim\nNão'
 
-
+        frase3 = '\n\nAgendar consulta\nMeus horários\nDesmarcar consulta '
         if frase == 'sim':
-            return 'Estou a disposição, o que seria?'
+            return 'Estou a disposição, o que seria?' + frase3
         if frase == 'nao obrigado':
             return 'Tenha um otimo dia, tchau'
 
@@ -155,6 +155,9 @@ class Chatbot():
             self.frases[self.chave] = resp
             self.gravaMemoria()
             return 'agendado'
+        if ultimaFrase == 'tchau' or 'Tchau':
+            del self.diaEscolhido
+
         try:
             resp = str(eval(frase))
             return resp

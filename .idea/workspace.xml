@@ -11,11 +11,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="telegram.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="telegram.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/telegram.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="84">
-              <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
+            <state relative-caret-position="126">
+              <caret line="7" selection-start-line="7" selection-end-line="7" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -23,11 +23,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Chatbot.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Chatbot.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Chatbot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-608">
-              <caret line="26" column="28" selection-start-line="26" selection-start-column="28" selection-end-line="26" selection-end-column="28" />
+            <state relative-caret-position="449">
+              <caret line="42" column="108" selection-start-line="42" selection-start-column="108" selection-end-line="42" selection-end-column="108" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -39,7 +39,7 @@
         <entry file="file://$PROJECT_DIR$/MariaBot.json">
           <provider selected="true" editor-type-id="text-editor">
             <state>
-              <caret column="173" selection-start-column="173" selection-end-column="173" />
+              <caret column="139" selection-start-column="139" selection-end-column="139" />
             </state>
           </provider>
         </entry>
@@ -171,10 +171,10 @@
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1177305" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5017065" side_tool="true" weight="0.2863485" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5017065" side_tool="true" weight="0.2857143" />
       <window_info anchor="bottom" id="Version Control" order="9" />
       <window_info anchor="bottom" id="Python Console" order="7" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49829352" weight="0.36101884" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49829352" weight="0.3599114" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info id="Favorites" order="2" side_tool="true" />
@@ -587,29 +587,29 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/telegram.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="7" selection-start-line="7" selection-end-line="7" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/MariaBot.json">
       <provider selected="true" editor-type-id="text-editor">
         <state>
-          <caret column="173" selection-start-column="173" selection-end-column="173" />
+          <caret column="139" selection-start-column="139" selection-end-column="139" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Chatbot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-608">
-          <caret line="26" column="28" selection-start-line="26" selection-start-column="28" selection-end-line="26" selection-end-column="28" />
+        <state relative-caret-position="449">
+          <caret line="42" column="108" selection-start-line="42" selection-start-column="108" selection-end-line="42" selection-end-column="108" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/telegram.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
           </folding>
         </state>
       </provider>
