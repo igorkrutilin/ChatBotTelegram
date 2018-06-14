@@ -14,8 +14,8 @@
       <file leaf-file-name="telegram.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/telegram.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="126">
-              <caret line="7" selection-start-line="7" selection-end-line="7" />
+            <state relative-caret-position="273">
+              <caret line="14" selection-start-line="14" selection-end-line="14" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -26,11 +26,20 @@
       <file leaf-file-name="Chatbot.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Chatbot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="449">
-              <caret line="42" column="108" selection-start-line="42" selection-start-column="108" selection-end-line="42" selection-end-column="108" />
+            <state relative-caret-position="251">
+              <caret line="135" column="25" selection-start-line="135" selection-start-column="25" selection-end-line="135" selection-end-column="25" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../venv/Lib/site-packages/telepot/__init__.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="511">
+              <caret line="1157" selection-start-line="1157" selection-end-line="1157" />
             </state>
           </provider>
         </entry>
@@ -39,7 +48,7 @@
         <entry file="file://$PROJECT_DIR$/MariaBot.json">
           <provider selected="true" editor-type-id="text-editor">
             <state>
-              <caret column="139" selection-start-column="139" selection-end-column="139" />
+              <caret column="252" selection-start-column="252" selection-end-column="279" />
             </state>
           </provider>
         </entry>
@@ -66,10 +75,11 @@
     <findStrings>
       <find>fala</find>
       <find>upper</find>
-      <find>resp</find>
       <find>tchau</find>
       <find>mais</find>
       <find>memoria</find>
+      <find>ultima</find>
+      <find>resp</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -88,9 +98,9 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="496" />
+    <option name="x" value="505" />
     <option name="y" value="4" />
-    <option name="width" value="1426" />
+    <option name="width" value="1417" />
     <option name="height" value="1040" />
   </component>
   <component name="ProjectView">
@@ -167,14 +177,15 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="496" y="4" width="1426" height="1040" extended-state="0" />
+    <frame x="505" y="4" width="1417" height="1040" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1177305" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.11848679" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5017065" side_tool="true" weight="0.2857143" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5024982" side_tool="true" weight="0.3599114" />
       <window_info anchor="bottom" id="Version Control" order="9" />
       <window_info anchor="bottom" id="Python Console" order="7" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49829352" weight="0.3599114" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4975018" visible="true" weight="0.3599114" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info id="Favorites" order="2" side_tool="true" />
@@ -573,6 +584,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/telegram.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="273">
+          <caret line="14" selection-start-line="14" selection-end-line="14" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="168">
@@ -580,34 +601,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../venv/Lib/site-packages/telepot/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="840">
-          <caret line="1157" selection-start-line="1157" selection-end-line="1157" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/telegram.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="7" selection-start-line="7" selection-end-line="7" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/MariaBot.json">
       <provider selected="true" editor-type-id="text-editor">
         <state>
-          <caret column="139" selection-start-column="139" selection-end-column="139" />
+          <caret column="252" selection-start-column="252" selection-end-column="279" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../venv/Lib/site-packages/telepot/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="511">
+          <caret line="1157" selection-start-line="1157" selection-end-line="1157" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Chatbot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="449">
-          <caret line="42" column="108" selection-start-line="42" selection-start-column="108" selection-end-line="42" selection-end-column="108" />
+        <state relative-caret-position="251">
+          <caret line="135" column="25" selection-start-line="135" selection-start-column="25" selection-end-line="135" selection-end-column="25" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>

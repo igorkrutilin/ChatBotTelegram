@@ -30,7 +30,7 @@ class Chatbot():
         self.agenda = {'atendimento','agendar','agendamento','fazer agendamento','marcar atendimento',
                        'marcar agendamento','marcar agendamento', 'consulta','consulta medica','agendar consulta','agendar atendimento' }
 
-        self.horarioAtendimentos = {'horario de atendimentos', 'meus horarios', 'horarios agendado','Meus horários'}
+        self.horarioAtendimentos = {'horario de atendimentos', 'meus horarios','meus horários', 'horarios agendado','Meus horários'}
 
         self.desmarcarAgenda = {'desmarcar', 'desmarcar agendamento', 'desmarcar consulta'}
 
@@ -89,30 +89,51 @@ class Chatbot():
             self.resp=1
             return 'Digite seu ID: '
 
+        if frase in self.desmarcarAgenda:
+            self.resp=1
+            return 'Digite seu ID: '
+
+        if frase in self.desmarcarAgenda:
+            self.resp = 1
+            return 'Digite seu ID: '
+
         if 1 == self.resp:
             self.diaEscolhido = int(frase)
-            self.conectBanco('AgendaMaria.db')
-            self.deleteAgendamento(int(self.diaEscolhido))
+            print(self.existeAgenda(self.diaEscolhido, 'AgendaMaria.db'))
+            if self.existeAgenda(self.diaEscolhido, 'AgendaMaria.db') == 1:
+                self.disconectBanco()
+                self.conectBanco('AgendaMaria.db')
+                self.deleteAgendamento(int(self.diaEscolhido))
+                self.disconectBanco()
+                return 'Ok Id numero ' + frase + ', foi desmarcado \n\nMais alguma coisa que posso te ajudar?\nSim\nNão'
             self.disconectBanco()
-            self.resp=0
-            self.diaEscolhido=0
-            return 'Ok Id numero ' + frase + ' foi desmarcado '
+            self.resp = 0
+            self.diaEscolhido = 0
+            return 'Nenhum agendamento encotrado com ID ' + frase + '\n\nMais alguma coisa que posso te ajudar?\nSim\nNão'
 
+        '''mostra horarios'''
         if frase in self.horarioAtendimentos:
             self.resp1 = 2
             return 'Digite seu ID: '
-        '''mostra horarios'''
         if 2 == self.resp1:
             self.diaEscolhido = int(frase)
-            tupla = self.searchSpecificData(int(self.diaEscolhido),'AgendaMaria.db')
+            print(self.existeAgenda(self.diaEscolhido, 'AgendaMaria.db'))
+            if self.existeAgenda(self.diaEscolhido, 'AgendaMaria.db') == 0:
+                self.disconectBanco()
+                self.conectBanco('AgendaMaria.db')
+                self.deleteAgendamento(int(self.diaEscolhido))
+                self.disconectBanco()
+                return 'Nenhum agendamento encotrado com ID ' + frase + '\n\nMais alguma coisa que posso te ajudar?\nSim\nNão'
+            tupla = self.searchSpecificData(int(self.diaEscolhido), 'AgendaMaria.db')
             self.disconectBanco()
             self.resp1 = 0
-            return 'Ok Id numero ' + frase + ' seu ´horario é... ' + str(tupla) + '\n\nMais alguma coisa que posso te ajudar?\nSim\nNão'
-
+            self.diaEscolhido = 0
+            return 'Ok Id numero ' + frase + ' seu ´horario é... ' + str(
+                tupla) + '\n\nMais alguma coisa que posso te ajudar?\nSim\nNão'
         frase3 = '\n\nAgendar consulta\nMeus horários\nDesmarcar consulta '
         if frase == 'sim':
             return 'Estou a disposição, o que seria?' + frase3
-        if frase == 'nao obrigado':
+        if frase in 'não':
             return 'Tenha um otimo dia, tchau'
 
 
@@ -155,7 +176,8 @@ class Chatbot():
             self.frases[self.chave] = resp
             self.gravaMemoria()
             return 'agendado'
-        if ultimaFrase == 'tchau' or 'Tchau':
+        if ultimaFrase in 'Tenha um otimo dia, tchau':
+            print( 'aquiii')
             del self.diaEscolhido
 
         try:
@@ -245,10 +267,7 @@ class Chatbot():
         self.conn.commit()
 
     def deleteAgendamento(self, id):
-       # self.c.execute("DELETE FROM AGENDA_DB WHERE AGENDA_DB.ID = ?", (id))
-        print(id)
         self.c.execute("""DELETE FROM AGENDA_DB WHERE id = ?""", (id,))
-        #delete from AGENDA_DB where AGENDA_DB.id = 77
         self.conn.commit()
 
 
@@ -259,5 +278,15 @@ class Chatbot():
         saida = self.c.fetchone()
         tratado = '\n'+str(saida[3])+' esta marcado para '+str(saida[1])+' as '+str(saida[2])
         return tratado
+
+    def existeAgenda(self, id, banco):
+
+        self.conn = sqlite3.connect(banco)
+        self.c = self.conn.cursor()
+
+        saida = self.c.execute("SELECT COUNT(*) FROM AGENDA_DB WHERE id=?", (id,)).fetchone()[0]
+
+        print("chegou aqui " +str(saida))
+        return int(saida)
 
 
